@@ -107,6 +107,5 @@ void test_eval_formula() {
 }
 
 int main() {
-	test_gray_code();
-	return 0;
+	test_eval_formula();
 }

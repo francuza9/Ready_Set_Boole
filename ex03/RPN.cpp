@@ -10,18 +10,19 @@ bool eval_formula(const std::string &formula) {
 			case '1':
 				stk.push(c == '1');
 				break;
-			case '!':
+			case '!': {
 				if (stk.empty())
 					std::cerr << "Error: Not enough operands for '!'" << std::endl;
 				bool val = stk.top();
 				stk.pop();
 				stk.push(!val);
 				break;
+			}
 			case '&':
 			case '|':
 			case '^':
 			case '>':
-			case '=':
+			case '=': {
 				if (stk.size() < 2)
 					std::cerr << "Error: Not enough operands for '" << c << "'" << std::endl;
 				bool right = stk.top(); stk.pop();
@@ -34,6 +35,7 @@ bool eval_formula(const std::string &formula) {
 					case '=': stk.push(left == right); break;
 				}
 				break;
+			}
 			default:
 				std::cerr << "Error: Invalid character '" << c << "' in formula." << std::endl;
 		}
