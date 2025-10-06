@@ -72,23 +72,21 @@ void test_eval_formula() {
 		{"101^!", false, true},  // !(1 ^ 0) -> false
 		{"101|!", false, true},  // !(1 | 0) -> false
 		{"110|>", true, true},   // 1 ⇒ (1 | 0) -> true
-		{"110|=", false, true},  // 1 == (1 | 0) -> false
+		{"110|=", true, true}, // 1 == (1 | 0)
 
 		// longer valid chains
-		{"110011&&||", true, true},
 		{"101010&&||=", true, true},
-		{"101010||&&=", true, true},
+		{"101010||&&=", false, true},
 
 		// malformed / invalid (should print error but behavior undefined)
 		{"!", false, false},             // unary op no operand
-		{"1!", false, false},            // leftover result
 		{"10", false, false},            // missing operator
 		{"10&1", false, false},          // extra operand
 		{"1011||==", false, false},      // too many operators
 		{"abcd", false, false},          // invalid characters
 		{"", false, false},              // empty string
-		{"1!!", false, false},           // extra negation after finished
-		{"11>!", false, false},          // negating after complete formula
+		{"110011&&||", true, false}		 // valid but incomplete (missing final operator)
+
 	};
 
 	for (auto& t : tests) {
