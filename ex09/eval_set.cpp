@@ -4,11 +4,6 @@
 #include <algorithm>
 #include <cctype>
 
-// ───────────────────────────────
-//  SET OPERATION HELPERS
-// ───────────────────────────────
-
-// remove duplicates and sort (to keep set semantics)
 std::vector<int> normalize(std::vector<int> v) {
 	std::sort(v.begin(), v.end());
 	v.erase(std::unique(v.begin(), v.end()), v.end());
@@ -39,12 +34,10 @@ std::vector<int> set_symmetric_diff_op(const std::vector<int>& a, const std::vec
 	return normalize(result);
 }
 
-// complement relative to universe
 std::vector<int> set_complement_op(const std::vector<int>& a, const std::vector<int>& universe) {
 	return set_difference_op(universe, a);
 }
 
-// logical equivalence: (A ∧ B) ∨ (!A ∧ !B)
 std::vector<int> set_equivalence_op(const std::vector<int>& a, const std::vector<int>& b, const std::vector<int>& universe) {
 	auto inter = set_intersection_op(a, b);
 	auto not_a = set_complement_op(a, universe);
@@ -53,7 +46,6 @@ std::vector<int> set_equivalence_op(const std::vector<int>& a, const std::vector
 	return set_union_op(inter, inter_neg);
 }
 
-// implication: !A ∨ B
 std::vector<int> set_implication_op(const std::vector<int>& a, const std::vector<int>& b, const std::vector<int>& universe) {
 	auto not_a = set_complement_op(a, universe);
 	return set_union_op(not_a, b);
